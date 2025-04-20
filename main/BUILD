@@ -1,0 +1,5 @@
+cc_binary(
+    name="main",
+    srcs=["main.cc"],
+    deps=["//third_party/eiserloh:squirrel_noise_5"],
+)
