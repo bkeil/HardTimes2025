@@ -5,4 +5,12 @@ module(
     version = "2025.0",
 )
 
+bazel_dep(name = "abseil-cpp", version = "20250127.1")
+bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 bazel_dep(name = "rules_cc", version = "0.1.1")
+
+git_override(
+    module_name = "hedron_compile_commands",
+    remote = "https://github.com/mikael-s-persson/bazel-compile-commands-extractor",
+    commit = "f5fbd4cee671d8d908f37c83abaf70fba5928fc7",
+)
