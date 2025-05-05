@@ -5,6 +5,6 @@ cc_binary(
     srcs = ["main.cc"],
     deps = [
         "//gen:person",
-        "//third_party/eiserloh:squirrel_noise_5",
+        "//gen:random",
     ],
 )
