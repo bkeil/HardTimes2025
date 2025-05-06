@@ -6,6 +6,7 @@ cc_library(
     name = "person",
     srcs = ["person.cc"],
     hdrs = ["person.h"],
+    data = ["//db:backgrounds.json"],
     deps = [
         "@abseil-cpp//absl/base:no_destructor",
         "@abseil-cpp//absl/types:span",

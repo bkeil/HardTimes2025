@@ -3,6 +3,8 @@
 
 #include "gen/person.h"
 
+#include <fstream>
+
 #include "absl/types/span.h"
 #include "nlohmann/json.hpp"
 
@@ -10,31 +12,14 @@ namespace ht2025 {
 
 absl::Span<const Background> BACKGROUNDS() {
     static const absl::NoDestructor<std::vector<Background>> backgrounds([]() {
-        std::string json_data = R"(
-{
-    "Artisan": {
-        "description": [
-            "This person is a crafter of some variety, whether a blacksmith, carpenter, shipwright, weaver, or a maker of more ",
-            "exotic goods. In humble villages an artisan is most likely to make the bulk of their living by the same subsistence ",
-            "farming as their neighbors, but in towns and cities they might be full-time professionals, perhaps belonging to some ",
-            "guild or brotherhood specific to their craft. While an artisan’s Craft skill is chiefly applicable to those works ",
-            "related to their background, they often know enough or can improvise sufficiently to make competent efforts at other ",
-            "types of work."
-        ]
-    },
-    "Barbarian": {
-        "description": [
-            "This person is counted savage even in a world as brutal as this one. Primitive hill tribes, hard-pressed jungle ",
-            "clans, or simple frontiersmen too long out of contact with a more sophisticated civilization might all qualify for ",
-            "this background. They know how to live without the comforts a softer and more pacified people might require and they ",
-            "have a ready acceptance of violence that can keep they alive where others might perish. Still, the material privation ",
-            "of their life does not mean they are necessarily stupid or unadaptable, nor that they lack your own forms of culture."
-        ]
-    }
-}
-        )";
+        std::ifstream file("db/backgrounds.json");
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to open db/backgrounds.json");
+        }
+        nlohmann::json json;
+        file >> json;
         std::vector<Background> vec;
-        auto json = nlohmann::json::parse(json_data);
+
         for (auto& [name, data] : json.items()) {
             std::string description;
             for (const auto& desc : data["description"]) {
