@@ -1,19 +1,31 @@
 #include <iostream>
 
+#include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "gen/person.h"
-#include "gen/random.h"
+#include "gen/region.h"
+#include "types/numeric.h"
+#include "types/person.h"
+#include "types/region.h"
 
-int main(int argc, char** argv) {
-    std::cout << "Hello, World!" << std::endl;
+namespace ht2025 {
 
-    ht2025::Seed seed = 12345;
-
-    const auto backgrounds = ht2025::BACKGROUNDS();
-    for (int i = 0; i < 10; ++i) {
-        ht2025::Background background = ht2025::Choice(seed, i, 0, backgrounds);
-        std::cout << "Background " << i << ": " << background.name() << std::endl;
+void Demo() {
+    Seed world_seed = 12345;
+    for (int x = 0; x < 3; ++x) {
+        for (int y = 0; y < 3; ++y) {
+            GetRegion({x, y}, 2, world_seed);
+        }
     }
-
-    std::cout << "Goodbye, World!" << std::endl;
-    return 0;
+    for (int x = 0; x < 3; ++x) {
+        for (int y = 0; y < 3; ++y) {
+            Location loc = {x, y};
+            const Region& region = GetRegion(loc, 2, world_seed);
+            LOG(INFO) << "Region at " << loc.first << ", " << loc.second << ": " << *region.name;
+        }
+    }
 }
+
+}  // namespace ht2025
+
+int main(int argc, char** argv) { ht2025::Demo(); }

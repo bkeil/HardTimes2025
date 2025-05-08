@@ -6,5 +6,8 @@ cc_binary(
     deps = [
         "//gen:person",
         "//gen:random",
+        "//gen:region",
+        "//types",
+        "@abseil-cpp//absl/strings:str_format",
     ],
 )

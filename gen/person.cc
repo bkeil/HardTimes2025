@@ -7,6 +7,7 @@
 
 #include "absl/types/span.h"
 #include "nlohmann/json.hpp"
+#include "types/person.h"
 
 namespace ht2025 {
 
@@ -25,7 +26,7 @@ absl::Span<const Background> BACKGROUNDS() {
             for (const auto& desc : data["description"]) {
                 description += desc.get<std::string>();
             }
-            vec.emplace_back(name, description);
+            vec.push_back({.name = name, .description = description});
         }
         return vec;
     }());
