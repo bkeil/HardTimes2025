@@ -8,6 +8,8 @@ cc_binary(
         "//gen:random",
         "//gen:region",
         "//types",
+        "@abseil-cpp//absl/container:node_hash_map",
+        "@abseil-cpp//absl/container:node_hash_set",
         "@abseil-cpp//absl/strings:str_format",
     ],
 )
