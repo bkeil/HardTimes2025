@@ -60,12 +60,14 @@ void Demo() {
         for (int x = LEFT; x < RIGHT; ++x) {
             Location loc = {x, y};
             const Region& region = GetRegion(loc, 2, world_seed);
-            std::cout << "Region at " << loc.first << ", " << loc.second << ": " << std::setw(35) << *region.name
-                      << (region.superior ? (absl::StrCat(" (part of ", GetRegion(*region.superior, 2, world_seed).name.value(),
-                                                          " [", region.superior->first, ", ", region.superior->second, "])"))
-                                          : (absl::StrCat(" (apex)")))
-                      << std::endl;
+            std::cerr << "\"" << *region.name << "\x0D\x0A\x0D\x0A"
+                      << (region.superior
+                              ? (absl::StrCat(" (part of ", GetRegion(*region.superior, 2, world_seed).name.value(),
+                                              /*" [", region.superior->first, ", ", region.superior->second, "]",/**/ ")"))
+                              : (absl::StrCat(" (apex)")))
+                      << (x == (RIGHT - 1) ? "\"\x0D\x0A" : "\",");
         }
+        std::cout << "\x0D\x0A";
     }
 }
 

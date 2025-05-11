@@ -16,13 +16,14 @@
         "${Event} ${Feature}",
         "${Event} ${Government}",
         "${Government} of ${Features}",
+        "${Government} of ${Remant}",
         "${Landmark} ${Defense}",
         "${Landmark} ${Domain}",
         "${Landmark} ${Dwelling}",
         "${Landmark} ${Feature}",
         "${Landmark} ${Features}",
         "${Landmark} ${Population}",
-        "${Money}",
+        "${Money Phrase}",
         "${Monster} ${Features}",
         "${Population} of the ${Tool}",
         "${Quantity} ${Features}",
@@ -31,11 +32,16 @@
         "${Ruler} ${Dwelling}",
         "${Tool} ${Dwelling}",
         "${Tool} ${Feature}",
+        "${Vital} of the ${Monster}",
+        "The ${Background} ${Government}",
+        "The ${Color} ${Government}",
+        "The ${Treasure} ${Feature}"
+    ],
+    "Money Phrase": [
+        "${Money}",
         "${Treasure} ${Domain}",
         "${Treasure} ${Dwelling}",
-        "${Virtue}'s ${Money}",
-        "${Vital} of the ${Monster}",
-        "The ${Color} ${Domain}"
+        "${Virtue}'s ${Money}"
     ],
     "Background": [
         "Beekeeper",
@@ -245,7 +251,6 @@
         "Hundred",
         "Many",
         "Nine",
-        "Seven Time Seven",
         "Seven",
         "Six",
         "Ten",
@@ -255,17 +260,44 @@
         "Twenty",
         "Two"
     ],
+    "Remant": [
+        "Ash",
+        "Char",
+        "Dust",
+        "Rust",
+        "Soot"
+    ],
+    "Remnants": [
+        "Ashes",
+        "Bones",
+        "Cinders",
+        "Remains",
+        "Remnants",
+        "Ruins",
+        "Shards"
+    ],
     "Ruler": [
+        "${Quantity} Kings",
+        "${Quantity} Queens",
+        "Ashking",
         "Bloodking",
+        "Boneking",
         "Caliph",
+        "Dreamempress",
         "Duchess",
         "Duke",
+        "Dustqueen",
         "Emperor",
         "Empress",
+        "Frostlord",
+        "Ironqueen",
         "King",
-        "${Quantity} Kings",
         "Queen",
-        "${Quantity} Queens"
+        "Shadowlord",
+        "Skyempress",
+        "Stonequeen",
+        "Thornqueen",
+        "Wyrmqueen"
     ],
     "Tool": [
         "Cloak",
@@ -309,6 +341,9 @@
         "Valor"
     ],
     "Vital": [
-        "Heart"
+        "Breath",
+        "Blood",
+        "Heart",
+        "Spine"
     ]
 }

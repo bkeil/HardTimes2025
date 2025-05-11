@@ -13,7 +13,6 @@ cc_library(
     data = [
         "//db:person_name_lists.json",
         "//db:region_name_grammar.json",
-        "//db:region_name_lists.json",
     ],
     deps = [
         ":random",
