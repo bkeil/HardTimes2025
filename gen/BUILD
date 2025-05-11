@@ -12,10 +12,14 @@ cc_library(
     ],
     data = [
         "//db:person_name_lists.json",
+        "//db:region_name_grammar.json",
         "//db:region_name_lists.json",
     ],
     deps = [
+        ":random",
+        "//types",
         "@abseil-cpp//absl/base:no_destructor",
+        "@abseil-cpp//absl/container:flat_hash_map",
         "@abseil-cpp//absl/log",
         "@abseil-cpp//absl/types:span",
         "@nlohmann_json//:singleheader-json",

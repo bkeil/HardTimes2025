@@ -14,7 +14,9 @@ T& Choice(Seed seed, Index context, Index aspect, absl::Span<T> choices) {
     return choices[ChoseIndex(seed, context, aspect, choices.size())];
 }
 
-Seed GetSeedForLocation(Location location, Seed world_seed);
+inline Seed GetSeed(Seed seed, Index context, Index aspect) { return Get2dNoiseUint(context, aspect, seed); }
+
+Seed GetSeedForLocation(Location location, Seed superior_seed);
 
 }  // namespace ht2025
 

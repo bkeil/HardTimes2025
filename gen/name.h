@@ -4,12 +4,13 @@
 #include <string>
 
 #include "absl/types/span.h"
+#include "types/numeric.h"
 
 namespace ht2025 {
 
 absl::Span<absl::Span<const std::string>> PERSON_NAMES();
 
-absl::Span<absl::Span<const std::string>> REGION_NAMES();
+std::string RegionName(Seed seed);
 
 }  // namespace ht2025
 

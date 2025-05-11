@@ -16,8 +16,10 @@ Region& FetchRegion(Location location, int gen_level, Seed world_seed) {
     static absl::NoDestructor<absl::node_hash_map<Location, Region>> regions;
     if (!regions->contains(location)) {
         LOG(INFO) << "Generating region at " << location.first << ", " << location.second;
-        (*regions)[location] = {
-            .gen_level = 0, .x = location.first, .y = location.second, .seed = GetSeedForLocation(location, world_seed)};
+        Region& region = (*regions)[location];
+        region.gen_level = 0;
+        region.location = location;
+        region.seed = GetSeedForLocation(location, world_seed);
     }
 
     Region& region = (*regions)[location];
@@ -81,7 +83,7 @@ Index GetCulture(Region& region, Seed world_seed) {
         LOG(INFO) << "Chasing culture to " << superior.x << ", " << superior.y;
         return GetCulture(superior, world_seed);
     }
-    region.culture = ChoseIndex(world_seed, region.seed, 0, REGION_NAMES().size());
+    region.culture = GetSeedForLocation({0, 0}, region.seed);
     LOG(INFO) << "Set culture at " << region.x << ", " << region.y << " to " << *region.culture;
     return *region.culture;
 }
@@ -97,8 +99,7 @@ void GenRegion2(Region& region, Seed world_seed) {
 
     region.culture = GetCulture(region, world_seed);
 
-    absl::Span<const std::string> culture_names = REGION_NAMES()[*region.culture];
-    region.name = Choice(world_seed, region.seed, 0, culture_names);
+    region.name = RegionName(region.seed);
     LOG(INFO) << "Name: " << *region.name;
 
     region.gen_level = 2;
