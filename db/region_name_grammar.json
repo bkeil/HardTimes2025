@@ -71,10 +71,14 @@
     "Color": [
         "Black",
         "Blue",
+        "Brown",
         "Gray",
         "Green",
+        "Orange",
         "Purple",
         "Red",
+        "Tan",
+        "Teal",
         "White",
         "Yellow"
     ],
@@ -165,11 +169,16 @@
     ],
     "Government": [
         "Alliance",
+        "Assembly",
         "Coallition",
         "Confederacy",
+        "Council",
         "Dynasty",
         "Federation",
-        "Junta"
+        "Junta",
+        "Pact",
+        "Syndicate",
+        "Union"
     ],
     "Landmark": [
         "Battlestone",
