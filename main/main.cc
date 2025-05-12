@@ -33,41 +33,41 @@ void Demo() {
     map_chars[{1, 0}] = "→";
     map_chars[{1, 1}] = "↘";
 
-    constexpr int LEFT = 0, TOP = 0, RIGHT = 10, BOTTOM = 10;
+    constexpr int LEFT = 0, TOP = 0, RIGHT = 15, BOTTOM = 10;
 
-    std::cout << " ";
+    std::cerr << " ";
     for (int x = LEFT; x < RIGHT; ++x) {
-        std::cout << x;
+        std::cerr << x;
     }
-    std::cout << "\n";
+    std::cerr << "\n";
     for (int y = TOP; y < BOTTOM; ++y) {
-        std::cout << y;
+        std::cerr << y;
         for (int x = LEFT; x < RIGHT; ++x) {
+            int w = std::floor(std::log10(x)) + 1;
             Location loc{x, y};
             auto& region = GetRegion(loc, 2, world_seed);
             if (region.superior) {
                 auto& sup_loc = *region.superior;
                 auto delta = sup_loc - loc;
-                std::cout << map_chars[delta];
+                std::cerr << std::setw(w) << map_chars[delta];
             } else {
-                std::cout << "•";
+                std::cerr << std::setw(w) << "•";
             }
         }
-        std::cout << "\n";
+        std::cerr << "\n";
     }
 
     for (int y = TOP; y < BOTTOM; ++y) {
         for (int x = LEFT; x < RIGHT; ++x) {
             Location loc = {x, y};
             const Region& region = GetRegion(loc, 2, world_seed);
-            std::cerr << "\"" << *region.name << "\x0D\x0A\x0D\x0A"
+            std::cout << "\"" << *region.name << "\x0D\x0A\x0D\x0A"
                       << (region.superior
                               ? (absl::StrCat(" (part of ", GetRegion(*region.superior, 2, world_seed).name.value(),
                                               /*" [", region.superior->first, ", ", region.superior->second, "]",/**/ ")"))
                               : (absl::StrCat(" (apex)")))
                       << (x == (RIGHT - 1) ? "\"\x0D\x0A" : "\",");
         }
-        std::cout << "\x0D\x0A";
     }
 }
 
