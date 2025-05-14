@@ -3,6 +3,19 @@ load("@rules_cc//cc:cc_library.bzl", "cc_library")
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
+    name = "grammar",
+    srcs = ["grammar.cc"],
+    hdrs = ["grammar.h"],
+    deps = [
+        ":random",
+        "//types",
+        "@abseil-cpp//absl/container:flat_hash_map",
+        "@abseil-cpp//absl/strings",
+        "@nlohmann_json//:singleheader-json",
+    ],
+)
+
+cc_library(
     name = "name",
     srcs = [
         "name.cc",
@@ -15,10 +28,10 @@ cc_library(
         "//db:region_name_grammar.json",
     ],
     deps = [
+        ":grammar",
         ":random",
         "//types",
         "@abseil-cpp//absl/base:no_destructor",
-        "@abseil-cpp//absl/container:flat_hash_map",
         "@abseil-cpp//absl/log",
         "@abseil-cpp//absl/types:span",
         "@nlohmann_json//:singleheader-json",
