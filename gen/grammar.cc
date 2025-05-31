@@ -20,7 +20,8 @@ GrammarRules LoadRules(std::string_view path) {
     GrammarRules rules;
     for (const auto& [symbol, productions] : json.items()) {
         for (const auto& rule : productions) {
-            rules[symbol].emplace_back(rule.get<std::string>());
+            const auto& expansion = rule[0].get<std::string>();
+            rules[symbol].emplace_back(expansion);
         }
     }
     return rules;
