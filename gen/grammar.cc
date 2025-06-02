@@ -3,25 +3,30 @@
 #include <fstream>
 #include <regex>
 
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
 #include "gen/random.h"
 #include "nlohmann/json.hpp"
 
 namespace ht2025 {
 
-GrammarRules LoadRules(std::string_view path) {
-    std::ifstream file("db/region_name_grammar.json");
+GrammarRules LoadRules(std::string_view path, const Tags& tags) {
+    std::ifstream file(path.data());
     if (!file.is_open()) {
-        throw std::runtime_error("Failed to open db/region_name_grammar.json");
+        throw std::runtime_error(absl::StrCat("Failed to open ", path));
     }
-    nlohmann::json json;
-    file >> json;
+    nlohmann::json json = nlohmann::json::parse(file, nullptr, true, true);
 
     GrammarRules rules;
     for (const auto& [symbol, productions] : json.items()) {
         for (const auto& rule : productions) {
             const auto& expansion = rule[0].get<std::string>();
-            rules[symbol].emplace_back(expansion);
+            const auto& selections = rule[1];
+            std::vector<TagID> selection_tags;
+            for (const auto& tag : selections) {
+                selection_tags.push_back(tags.GetTag(tag.get<std::string_view>()));
+            }
+            rules[symbol].emplace_back(expansion, std::move(selection_tags));
         }
     }
     return rules;
@@ -37,8 +42,8 @@ Grammar::Grammar(GrammarRules rules, Symbol start) : start_(std::move(start)) {
         for (auto& production : productions) {
             Production p;
             std::smatch match;
-            std::string::const_iterator cursor = (production.cbegin());
-            while (std::regex_search(cursor, production.cend(), match, chunker)) {
+            std::string::const_iterator cursor = (production.text.cbegin());
+            while (std::regex_search(cursor, production.text.cend(), match, chunker)) {
                 p.symbols.emplace_back(match[0]);
                 cursor = match.suffix().first;
             }

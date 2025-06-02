@@ -1,0 +1,440 @@
+{
+    "Absolute": {
+        "Autocratic": 3, // Absolute power usually means autocratic rule
+        "Centralized": 2, // Power concentrated in one place
+        "Democratic": -3, // Direct opposition to democracy
+        "Decentralized": -3, // Direct opposition to decentralized power
+        "Feudal": -1, // Feudalism has dispersed power
+        "Honor": 1 // Can be associated with a strong, unwavering code
+    },
+    "Agility": {
+        "Earthen": -1, // Earth/Stone can imply slowness or rootedness
+        "Fire": 1, // Fire can be quick, dynamic
+        "Water": 1, // Flowing, adaptable
+        "Insects": 1, // Many insects are quick/agile
+        "Small Game": 2, // Often agile prey
+        "Big Game": -1, // Often less agile, more powerful
+        "Performer": 2 // Dancers, acrobats need agility
+    },
+    "Agrarian": {
+        "Crops": 3, // Core of agrarian society
+        "Livestock": 2, // Also crucial for agrarian societies
+        "Rural": 3, // Agrarian life is typically rural
+        "Resident": 1, // Settled farming
+        "Itinerant": -2, // Opposite of settled
+        "Hunter": -1, // Less focus on hunting
+        "Gatherer": -1, // Less focus on gathering, more on cultivation
+        "Mercantile": -1 // Less focus on trade, more on production
+    },
+    "Artisan": {
+        "Leather": 2, // Shoemaker
+        "Metal": 2, // Blacksmiths, jewelers
+        "Wood": 2, // Carpenters, carvers
+        "Stone": 1, // Masons, sculptors
+        "Footwear": 2, // Cobblers
+        "Earthen": 1, // Potters
+        "Resident": 1, // Artisans often have workshops
+        "Itinerant": -1, // Less likely to travel widely
+        "Mercantile": 1 // Artisans often sell their wares
+    },
+    "Autocratic": {
+        "Absolute": 2, // Autocracy implies absolute power
+        "Centralized": 3, // Power highly centralized
+        "Democratic": -3, // Direct opposite
+        "Decentralized": -3, // Direct opposite
+        "Feudal": -1, // Feudalism has fragmented power
+        "Soldier": 2, // Autocracies often rely on military
+        "Defense": 1, // Strong central power for defense
+        "Offense": 1 // Strong central power for offense
+    },
+    "Big Game": {
+        "Hunter": 3, // Direct association
+        "Small Game": -2, // Opposite focus
+        "Danger": 1, // Hunting big game often implies danger
+        "Horses": 1 // Useful for big game hunting
+    },
+    "Black": {
+        "Undead": 1, // Often associated with darkness/death
+        "Danger": 1, // Can symbolize danger or unknown
+        "Metal": 1 // Iron, steel
+    },
+    "Blood": {
+        "Danger": 2, // Violence, injury
+        "Offense": 2, // Warfare, combat
+        "Soldier": 1, // Soldiers shed blood
+        "Undead": 1 // Vampires, reanimated corpses
+    },
+    "Blue": {
+        "Water": 2, // Obvious association
+        "Cold": 1, // Can be associated with coldness
+        "Opalescent": 1 // Opalescent can have blue hues
+    },
+    "Bone": {
+        "Undead": 2, // Skeletons, necromancy
+        "Danger": 1, // Can imply death or decay
+        "Earthen": 1 // Buried bones, ancient remains
+    },
+    "Brown": {
+        "Earthen": 2, // Soil, dirt
+        "Wood": 2, // Tree trunks, branches
+        "Rural": 1 // Natural landscapes
+    },
+    "Buried": {
+        "Earthen": 2, // Necessarily within earth
+        "Stone": 1, // Buried under stones
+        "Wealthy": 1, // Buried treasure
+        "Danger": 1, // Traps, hidden threats
+        "Undead": 1 // Buried dead
+    },
+    "Centralized": {
+        "Autocratic": 2, // Autocracy implies centralized control
+        "Absolute": 2, // Absolute power is centralized
+        "Democratic": -2, // Democracies often have decentralized aspects
+        "Decentralized": -3, // Direct opposite
+        "Feudal": -2, // Feudalism is inherently decentralized
+        "Soldier": 1, // Centralized command for military
+        "Defense": 1 // Coordinated defense
+    },
+    "Cold": {
+        "Water": 1, // Ice, cold water
+        "Blue": 1, // Color association
+        "Highland": 1 // Mountainous regions can be cold
+    },
+    "Crops": {
+        "Agrarian": 3, // Core of agrarian society
+        "Rural": 2, // Crops are grown in rural areas
+        "Resident": 1, // Farming is settled
+        "Itinerant": -2 // Opposes settled farming
+    },
+    "Danger": {
+        "Blood": 2, // Violence
+        "Offense": 2, // Aggression
+        "Undead": 2, // Threatening creatures
+        "Soldier": 1, // Combat
+        "Big Game": 1 // Dangerous animals
+    },
+    "Decentralized": {
+        "Absolute": -3, // Opposes absolute power
+        "Autocratic": -3, // Opposes autocratic rule
+        "Centralized": -3, // Direct opposite
+        "Democratic": 2, // Democracies often have decentralized aspects
+        "Feudal": 2 // Feudalism is decentralized by nature
+    },
+    "Defense": {
+        "Soldier": 2, // Role of soldiers
+        "Centralized": 1, // Coordinated defense
+        "Honor": 1, // Defending homeland/people
+        "Offense": -1 // Opposite focus
+    },
+    "Democratic": {
+        "Autocratic": -3, // Direct opposite
+        "Absolute": -3, // Direct opposite
+        "Centralized": -2, // Less centralized than autocratic
+        "Decentralized": 2, // Often emphasizes local governance
+        "Feudal": -2, // Feudalism is hierarchical
+        "Priest": -1, // Less emphasis on religious authority in secular democracies
+        "Religious": -1 // Generally more secular
+    },
+    "Disease": {
+        "Undead": 1, // Can spread disease
+        "Danger": 2 // A major threat
+    },
+    "Divination": {
+        "Priest": 2, // Priests often perform divination
+        "Religious": 2, // Tied to spiritual practices
+        "Voice": 1 // Oracles, prophecies
+    },
+    "Earthen": {
+        "Agility": -1, // Implying rootedness or slowness
+        "Stone": 2, // Found in earth
+        "Brown": 2, // Color of earth
+        "Plants": 1, // Grow from earth
+        "Crops": 1, // Grow from earth
+        "Buried": 2, // Objects in earth
+        "Nature": 1 // Part of the natural world
+    },
+    "Feudal": {
+        "Autocratic": -1, // While having lords, power is fragmented
+        "Absolute": -1, // No single absolute ruler typically
+        "Centralized": -2, // Inherently decentralized
+        "Decentralized": 2, // Lords hold local power
+        "Rural": 2, // Predominantly rural society
+        "Agrarian": 1, // Land-based economy
+        "Soldier": 1, // Knights, retinues
+        "Honor": 1 // Strong code of chivalry
+    },
+    "Fire": {
+        "Agility": 1, // Dynamic, quick
+        "Danger": 1, // Destructive
+        "Red": 2, // Color of fire
+        "Orange": 2, // Color of fire
+        "Black": 1 // Soot, aftermath
+    },
+    "Fish": {
+        "Water": 3, // Habitat
+        "Gatherer": 1, // Fishing as a form of gathering
+        "Hunter": 1 // Fishing as a form of hunting
+    },
+    "Footwear": {
+        "Artisan": 2, // Cobblers
+        "Leather": 1 // (If you add a leather tag)
+    },
+    "Gatherer": {
+        "Crops": -1, // Less cultivation, more foraging
+        "Plants": 2, // Direct association
+        "Fish": 1, // Fishing can be gathering
+        "Hunter": -1, // Different primary focus
+        "Itinerant": 1, // Often nomadic
+        "Resident": -2, // Opposite of settled
+        "Rural": 1, // Wild places
+        "Small Game": 1 // Can be hunted/gathered
+    },
+    "Gray": {
+        "Stone": 2, // Common color of stone
+        "Metal": 1, // Some metals are gray
+        "Cold": 1 // Can imply bleakness, coldness
+    },
+    "Green": {
+        "Plants": 3, // Obvious association
+        "Tree": 2, // Foliage
+        "Nature": 2, // Natural color
+        "Rural": 1, // Lush landscapes
+        "Earthen": 1 // Growth from earth
+    },
+    "Highland": {
+        "Stone": 1, // Rocky terrain
+        "Cold": 1, // Higher altitudes often colder
+        "Rural": 1, // Often remote/less developed
+        "Water": 1, // Mountain streams
+        "Agility": 1 // Implies nimble movement over terrain
+    },
+    "Honor": {
+        "Soldier": 2, // Military codes of honor
+        "Defense": 1, // Defending honor, people
+        "Absolute": 1, // Unwavering principles
+        "Feudal": 1 // Chivalry
+    },
+    "Horses": {
+        "Livestock": 2, // Domesticated animal
+        "Hunter": 1, // Horseback hunting
+        "Soldier": 1, // Cavalry
+        "Agility": 1, // Agile animals
+        "Itinerant": 1 // Travel, nomadic groups
+    },
+    "Hunter": {
+        "Big Game": 3, // Primary focus
+        "Small Game": 3, // Primary focus
+        "Livestock": -2, // Focus on wild animals, not domesticated
+        "Crops": -2, // Focus on meat, not plants
+        "Itinerant": 1, // Often nomadic in pursuit of game
+        "Resident": -1, // Less settled
+        "Danger": 1, // Hunting can be dangerous
+        "Offense": 1 // Active pursuit
+    },
+    "Insects": {
+        "Nature": 1, // Part of the natural world
+        "Agility": 1, // Many are quick
+        "Disease": 1 // Some carry disease
+    },
+    "Itinerant": {
+        "Resident": -3, // Direct opposite
+        "Agrarian": -2, // Farming requires settled life
+        "Gatherer": 1, // Often nomadic
+        "Hunter": 1, // Often nomadic
+        "Horses": 1, // Useful for travel
+        "Mercantile": 1, // Traveling merchants
+        "Performer": 1 // Traveling entertainers
+    },
+    "Leather": {
+        "Big Game": 2, // Get more from big animals
+        "Small Game": 1, // Get less from small animals
+        "Livestock": 3, // Best way to get leather,
+        "Defense": 1 // Suitable for armor
+    },
+    "Livestock": {
+        "Agrarian": 2, // Key component of farming
+        "Rural": 2, // Raised in rural areas
+        "Resident": 1, // Requires settled care
+        "Hunter": -2 // Focus on wild animals
+        // "Meat": 1 // (If you add a meat tag)
+    },
+    "Mercantile": {
+        "Wealthy": 2, // Trade generates wealth
+        "Artisan": 1, // Selling goods
+        "Resident": 1, // Markets, established shops
+        "Itinerant": 1, // Traveling merchants
+        "Agrarian": -1 // Less focus on direct production
+    },
+    "Metal": {
+        "Artisan": 2, // Metalworking
+        "Stone": -1, // Opposing material
+        "Brown": 1, // Rust, some alloys
+        "Gray": 1, // Steel, iron
+        "Offense": 1, // Weapons
+        "Defense": 1 // Armor
+    },
+    "Nature": {
+        "Plants": 2, // Core of nature
+        "Tree": 2, // Core of nature
+        "Water": 1, // Natural element
+        "Earthen": 1, // Natural element
+        "Rural": 2, // Natural landscapes
+        // "Wild": 2, // (If you add a wild tag)
+        "Urban": -2 // (If you add an urban tag)
+    },
+    "Offense": {
+        "Soldier": 2, // Primary role
+        "Blood": 2, // Violence
+        "Danger": 2, // Creates danger
+        "Defense": -2 // Opposite focus
+    },
+    "Opalescent": {
+        "Blue": 1, // Common hue
+        "White": 1, // Common hue
+        "Green": 1, // Can have green flashes
+        "Stone": 1 // Opal is a stone
+    },
+    "Orange": {
+        "Fire": 2, // Color of fire
+        "Brown": 1 // Earthy tones
+    },
+    "Performer": {
+        "Agility": 2, // Dancers, acrobats
+        "Voice": 2, // Singers, orators
+        "Itinerant": 1 // Traveling performers
+    },
+    "Pink": {
+        "Blood": 1 // Lighter shades of blood
+    },
+    "Plants": {
+        "Green": 3, // Primary color
+        "Crops": 2, // Cultivated plants
+        "Nature": 2, // Essential to nature
+        "Earthen": 1, // Grow from earth
+        "Gatherer": 2 // Gathered from plants
+    },
+    "Priest": {
+        "Religious": 3, // Core of religious authority
+        "Divination": 2, // Often practice divination
+        "Voice": 1, // Speaking religious texts/sermons
+        "Centralized": 1, // Can be part of a centralized religious hierarchy
+        "Democratic": -1, // Less emphasis on individual belief in some faiths
+        "Honor": 1 // Sacred duties
+    },
+    "Purple": {
+        "Wealthy": 1, // Historically a color of royalty/luxury
+        "Religious": 1 // Liturgical colors
+    },
+    "Red": {
+        "Blood": 2, // Obvious association
+        "Fire": 2, // Obvious association
+        "Danger": 1, // Warning color
+        "Offense": 1 // Aggression
+    },
+    "Religious": {
+        "Priest": 3, // Core of religious practice
+        "Divination": 2, // Spiritual guidance
+        "Honor": 1, // Moral codes
+        "Centralized": 1, // Can have hierarchical churches
+        "Decentralized": 1, // Can also have dispersed practices (e.g., paganism)
+        "Democratic": -1 // Less emphasis on secular democracy
+    },
+    "Resident": {
+        "Itinerant": -3, // Direct opposite
+        "Agrarian": 1, // Settled farming
+        "Artisan": 1, // Workshops
+        "Mercantile": 1, // Shops
+        "Crops": 1, // Requires settled care
+        "Livestock": 1 // Requires settled care
+    },
+    "Rural": {
+        "Agrarian": 3, // Farming is rural
+        "Crops": 2, // Grown in rural areas
+        "Livestock": 2, // Raised in rural areas
+        "Nature": 2, // Natural landscapes
+        "Hunter": 1, // Hunting in rural areas
+        "Gatherer": 1, // Gathering in rural areas
+        "Feudal": 2, // Feudal societies were largely rural
+        "Highland": 1, // Highlands often rural
+        "Urban": -3 // Opposites.
+    },
+    "Small Game": {
+        "Hunter": 3, // Primary focus
+        "Big Game": -2, // Opposite focus
+        "Gatherer": 1, // Trapping small game
+        "Agility": 2 // Often agile
+    },
+    "Soldier": {
+        "Offense": 2, // Primary role
+        "Defense": 2, // Primary role
+        "Honor": 2, // Military codes
+        "Blood": 1, // Combat
+        "Danger": 1, // Combat
+        "Metal": 1, // Weapons, armor
+        "Autocratic": 1, // Autocracies often rely on military
+        "Centralized": 1 // Military organization
+    },
+    "Stone": {
+        "Earthen": 2, // Found in earth
+        "Brown": 1, // Some stone colors
+        "Gray": 2, // Common stone color
+        "Highland": 1, // Rocky terrain
+        "Artisan": 1, // Stonemasons
+        "Buried": 1 // Stone can be buried
+    },
+    "Tree": {
+        "Wood": 3, // Obvious association
+        "Plants": 2, // Type of plant
+        "Nature": 2, // Essential to nature
+        "Green": 2, // Foliage
+        "Rural": 1 // Forests, groves
+    },
+    "Undead": {
+        "Blood": 1, // Vampires
+        "Bone": 2, // Skeletons
+        "Disease": 1, // Can spread disease
+        "Danger": 2, // Threatening
+        "Black": 1 // Darkness, decay
+    },
+    "Urban": {
+        "Agrarian": -1, // Maybe just some roof-top beekeepers or so.
+        "Disease": 1, // Diseases spread better in cities
+        "Nature": -1, // Lass nature in urban areas
+        "Crops": -2, // Hard to grow crops in urban areas
+        "Resident": 2, // City folk tend to be pretty settled
+        "Rural": -3 // Direct opposite
+    },
+    "Voice": {
+        "Performer": 2, // Singers, orators
+        "Divination": 1, // Oracles
+        "Priest": 1 // Sermons, chanting
+    },
+    "Water": {
+        "Blue": 2, // Obvious association
+        "Cold": 1, // Ice, cold water
+        "Fish": 3, // Habitat
+        "Nature": 1, // Natural element
+        "Agility": 1 // Flowing, adaptable
+    },
+    "Wealthy": {
+        "Mercantile": 2, // Trade generates wealth
+        "Buried": 1, // Buried treasure
+        "Purple": 1 // Color of luxury
+    },
+    "White": {
+        "Cold": 1, // Snow, ice
+        "Bone": 1, // Bleached bones
+        "Opalescent": 1 // Common hue
+    },
+    "Wood": {
+        "Tree": 3, // Obvious association
+        "Artisan": 2, // Carpenters, woodcarvers
+        "Brown": 2, // Color of wood
+        "Nature": 1 // Natural material
+    },
+    "Yellow": {
+        "Fire": 1, // Can be part of fire
+        "Disease": 1 // Skin turns yellow in sickness sometimes
+        // "Gold": 1 // (If you add a gold tag, it's a strong connection)
+    }
+}

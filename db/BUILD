@@ -1,1 +1,4 @@
-exports_files(glob(["*.json"]))
+exports_files(glob([
+    "*.json",
+    "*.jsonc",
+]))

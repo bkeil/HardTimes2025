@@ -8,6 +8,7 @@
 #include "absl/types/span.h"
 #include "gen/grammar.h"
 #include "gen/random.h"
+#include "gen/tag.h"
 #include "nlohmann/json.hpp"
 #include "types/numeric.h"
 
@@ -35,7 +36,9 @@ std::vector<std::vector<std::string>> LoadStringLists(std::string_view filename)
 }  // namespace
 
 std::string RegionName(Seed seed) {
-    static absl::NoDestructor<Grammar> grammar(([] { return Grammar(LoadRules("db/region_name_grammar.json"), "rules"); })());
+    static const absl::NoDestructor<Tags> tags(LoadTags("db/tags.jsonc"));
+    static absl::NoDestructor<Grammar> grammar(
+        ([] { return Grammar(LoadRules("db/region_name_grammar.json", *tags), "rules"); })());
     return grammar->GenerateString(seed, 0);
 }
 

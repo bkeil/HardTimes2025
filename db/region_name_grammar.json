@@ -50,12 +50,12 @@
         ["Cowherd", ["Agrarian", "Livestock"]],
         ["Dancer", ["Performer", "Agility"]],
         ["Farmer", ["Agrarian", "Crops", "Livestock", "Resident"]],
-        ["Fisher", ["Hunter", "Water"]],
-        ["Fisherman", ["Hunter", "Water"]],
+        ["Fisher", ["Hunter", "Fish"]],
+        ["Fisherman", ["Hunter", "Fish"]],
         ["Herdsman", ["Agrarian", "Livestock"]],
         ["Horseman", ["Agrarian", "Horses"]],
-        ["Hunter", ["Hunter"]],
-        ["Huntsman", ["Hunter"]],
+        ["Hunter", ["Hunter", "Big Game"]],
+        ["Huntsman", ["Hunter", "Big Game"]],
         ["Merchant", ["Mercantile", "Resident"]],
         ["Miner", ["Gatherer", "Metal", "Stone"]],
         ["Oracle", ["Priest", "Divination"]],
@@ -63,13 +63,14 @@
         ["Ploughman", ["Agrarian", "Crops"]],
         ["Shepherd", ["Agrarian", "Livestock", "Itinerant"]],
         ["Shieldmaker", ["Artisan", "Defense", "Metal", "Wood"]],
-        ["Shipwright", ["Artisan", "Wealthy", "Water", ""]],
+        ["Shipwright", ["Artisan", "Wealthy", "Water", "Wood"]],
         ["Shoemaker", ["Artisan", "Footwear"]],
         ["Singer", ["Performer", "Voice"]],
         ["Smith", ["Artisan"]],
         ["Swineherd", ["Agrarian", "Livestock"]],
         ["Tiller", ["Agrarian", "Crops"]],
         ["Trader", ["Mercantile"]],
+        ["Trapper", ["Hunter", "Small Game"]],
         ["Woodwright", ["Artisan", "Wood"]]
     ],
     "Color": [
@@ -90,19 +91,19 @@
     ],
     "Danger": [
         ["${Monster}", []],
-        ["Demon", []],
+        ["Demon", ["Religious"]],
         ["Fallen Angel", ["Religious"]],
         ["Murder", []],
         ["Revenant", ["Undead"]],
-        ["Sever", []],
-        ["The Plague", []],
-        ["Thorn", []]
+        ["Sever", ["Blood"]],
+        ["The Plague", ["Disease"]],
+        ["Thorn", ["Plants"]]
     ],
     "Defense": [
         ["Citadel", []],
         ["Fortress", ["Stone"]],
         ["Fort", []],
-        ["Fortwood", ["Wood", "Nature"]],
+        ["Fortwood", ["Tree"]],
         ["Garrison", ["Soldier"]],
         ["Redoubt", ["Earthen"]],
         ["Stronghold", []],
@@ -125,7 +126,7 @@
         ["Realm", []],
         ["Republic", ["Democratic"]],
         ["Sultanate", ["Autocratic", "Religious"]],
-        ["Wildwood", ["Decentralized", "Wood", "Nature"]]
+        ["Wildwood", ["Decentralized", "Tree"]]
     ],
     "Domains": [["Lands", []]],
     "Dwelling": [
@@ -232,7 +233,7 @@
         ["Blessed", ["Religious"]],
         ["Damned", ["Religious"]],
         ["Tribes", ["Decentralized"]],
-        ["United Clans", [""]],
+        ["United Clans", []],
         ["${Background} Clans", []],
         ["${Treasure} Tribes", ["Wealthy"]]
     ],

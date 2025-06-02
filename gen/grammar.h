@@ -7,12 +7,13 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "types/numeric.h"
+#include "types/tag.h"
 
 namespace ht2025 {
-using GrammarRules = absl::flat_hash_map<std::string, std::vector<std::string>>;
+using GrammarRules = absl::flat_hash_map<std::string, std::vector<TaggedText>>;
 using Symbol = std::string;
 
-GrammarRules LoadRules(std::string_view path);
+GrammarRules LoadRules(std::string_view path, const Tags& tags);
 
 class Grammar {
    public:

@@ -26,10 +26,12 @@ cc_library(
     data = [
         "//db:person_name_lists.json",
         "//db:region_name_grammar.json",
+        "//db:tags.jsonc",
     ],
     deps = [
         ":grammar",
         ":random",
+        ":tag",
         "//types",
         "@abseil-cpp//absl/base:no_destructor",
         "@abseil-cpp//absl/log",
@@ -75,6 +77,18 @@ cc_library(
         "@abseil-cpp//absl/log",
         "@abseil-cpp//absl/strings",
         "@abseil-cpp//absl/types:span",
+        "@nlohmann_json//:singleheader-json",
+    ],
+)
+
+cc_library(
+    name = "tag",
+    srcs = ["tag.cc"],
+    hdrs = ["tag.h"],
+    deps = [
+        "//types",
+        "@abseil-cpp//absl/log",
+        "@abseil-cpp//absl/strings",
         "@nlohmann_json//:singleheader-json",
     ],
 )
