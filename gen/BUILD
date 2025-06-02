@@ -8,6 +8,7 @@ cc_library(
     hdrs = ["grammar.h"],
     deps = [
         ":random",
+        ":tag",
         "//types",
         "@abseil-cpp//absl/container:flat_hash_map",
         "@abseil-cpp//absl/strings",
@@ -86,6 +87,7 @@ cc_library(
     srcs = ["tag.cc"],
     hdrs = ["tag.h"],
     deps = [
+        ":random",
         "//types",
         "@abseil-cpp//absl/log",
         "@abseil-cpp//absl/strings",

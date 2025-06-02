@@ -17,18 +17,23 @@ GrammarRules LoadRules(std::string_view path, const Tags& tags);
 
 class Grammar {
    public:
-    Grammar(GrammarRules rules, Symbol start);
+    Grammar(GrammarRules rules, Symbol start, const Tags* tags);
 
-    std::vector<std::string_view> GenerateParts(Seed seed, Index context) const;
-    std::string GenerateString(Seed seed, Index context) const;
+    std::vector<std::string_view> GenerateParts(Seed seed, Index context, const std::vector<TagID>& selector_tags) const;
+    std::string GenerateString(Seed seed, Index context, const std::vector<TagID>& selector_tags) const;
 
    private:
-    void Execute(Seed seed, Index context, const Symbol& symbol, Index* count, std::vector<std::string_view>* out) const;
     struct Production {
         std::vector<Symbol> symbols;
+        std::vector<TagID> tags;
     };
+
+    void Execute(Seed seed, Index context, const Symbol& symbol, Index* count, std::vector<TagID>* tags,
+                 std::vector<std::string_view>* out) const;
+
     absl::flat_hash_map<Symbol, std::vector<Production>> rules_;
     Symbol start_;
+    const Tags* tags_;
 };
 
 }  // namespace ht2025

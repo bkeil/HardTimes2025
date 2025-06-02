@@ -350,7 +350,7 @@
     "Rural": {
         "Agrarian": 3, // Farming is rural
         "Crops": 1, // Grown in rural areas
-        "Livestock": 2, // Raised in rural areas
+        "Livestock": 1, // Raised in rural areas
         "Nature": 2, // Natural landscapes
         "Hunter": 1, // Hunting in rural areas
         "Gatherer": 1, // Gathering in rural areas

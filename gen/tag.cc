@@ -30,7 +30,7 @@ Tags LoadTags(std::string_view path) {
         for (const auto& [selection, weight] : interactions.items()) {
             QCHECK(weight.is_number()) << " for selector " << selector << " selection " << selection;
             TagID selection_tag = tags.GetTag(selection);
-            tags.SetWeight(selector_tag, selection_tag, weight.get<TagHarmony>());
+            tags.SetHarmony(selector_tag, selection_tag, weight.get<TagHarmony>());
         }
     }
 

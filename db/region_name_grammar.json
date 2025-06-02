@@ -8,7 +8,6 @@
         ["${Defense} of the ${Ruler}", ["Defense"]],
         ["${Domain} of ${Quantity}", []],
         ["${Domain} of the ${Population}", []],
-        ["${Domain} of the ${Population}", []],
         ["${Domain} of the ${Ruler}", []],
         ["${Domain} of the ${Tool}", []],
         ["${Dwelling}", ["Resident"]],
@@ -119,7 +118,7 @@
         ["Dominion", ["Centralized"]],
         ["Empire", ["Centralized", "Autocratic", "Feudal", "Absolute"]],
         ["Holy Lands", ["Religious"]],
-        ["Hordelands", ["Decentralized", "Horses"]],
+        ["Hordelands", ["Decentralized", "Horses", "Itinerant"]],
         ["Kingdom", ["Feudal"]],
         ["Land", ["Agrarian"]],
         ["Nation", ["Centralized"]],
@@ -275,11 +274,11 @@
         ["Two", []]
     ],
     "Remant": [
-        ["Ash", ["Fire"]],
-        ["Char", ["Fire"]],
-        ["Dust", []],
-        ["Rust", ["Water"]],
-        ["Soot", []]
+        ["Ash", ["Fire", "Gray"]],
+        ["Char", ["Fire", "Black"]],
+        ["Dust", ["Gray"]],
+        ["Rust", ["Water", "Brown"]],
+        ["Soot", ["Black"]]
     ],
     "Remnants": [
         ["Ashes", ["Fire"]],

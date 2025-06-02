@@ -18,10 +18,13 @@ struct TaggedText {
 class Tags {
    public:
     Tags() : next_id_(1) {}
+
     TagID GetTag(std::string_view tag) const;
+    TagHarmony GetHarmony(TagID selector, TagID selection) const;
+    std::string_view GetText(TagID tag) const;
 
     TagID RegisterTag(std::string_view tag);
-    void SetWeight(TagID selector, TagID selection, TagHarmony weight);
+    void SetHarmony(TagID selector, TagID selection, TagHarmony weight);
 
    private:
     TagID next_id_;

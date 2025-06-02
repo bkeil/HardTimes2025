@@ -2,6 +2,7 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_cat.h"
 
 namespace ht2025 {
 
@@ -19,8 +20,21 @@ TagID Tags::GetTag(std::string_view tag) const {
     return tag_ids_.at(tag);
 }
 
-void Tags::SetWeight(TagID selector, TagID selection, TagHarmony weight) {
+std::string_view Tags::GetText(TagID tag) const {
+    for (const auto& [text, id] : tag_ids_) {
+        if (id == tag) return text;
+    }
+    throw std::runtime_error(absl::StrCat("Missing text for ", tag));
+}
+
+void Tags::SetHarmony(TagID selector, TagID selection, TagHarmony weight) {
     interactions_[std::make_pair(selector, selection)] = weight;
+}
+
+TagHarmony Tags::GetHarmony(TagID selector, TagID selection) const {
+    auto it = interactions_.find(std::make_pair(selector, selection));
+    if (it == interactions_.end()) return 0;
+    return it->second;
 }
 
 }  // namespace ht2025
