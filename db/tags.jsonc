@@ -209,8 +209,8 @@
         "Agility": 1 // Implies nimble movement over terrain
     },
     "Honor": {
-        "Soldier": 2, // Military codes of honor
-        "Defense": 1, // Defending honor, people
+        "Soldier": 1, // Military codes of honor
+        "Defense": 2, // Defending honor, people
         "Absolute": 1, // Unwavering principles
         "Feudal": 1 // Chivalry
     },
@@ -349,7 +349,7 @@
     },
     "Rural": {
         "Agrarian": 3, // Farming is rural
-        "Crops": 2, // Grown in rural areas
+        "Crops": 1, // Grown in rural areas
         "Livestock": 2, // Raised in rural areas
         "Nature": 2, // Natural landscapes
         "Hunter": 1, // Hunting in rural areas
@@ -412,7 +412,7 @@
     "Water": {
         "Blue": 2, // Obvious association
         "Cold": 1, // Ice, cold water
-        "Fish": 3, // Habitat
+        "Fish": 1, // Habitat
         "Nature": 1, // Natural element
         "Agility": 1 // Flowing, adaptable
     },
@@ -427,7 +427,7 @@
         "Opalescent": 1 // Common hue
     },
     "Wood": {
-        "Tree": 3, // Obvious association
+        "Tree": 1, // Obvious association
         "Artisan": 2, // Carpenters, woodcarvers
         "Brown": 2, // Color of wood
         "Nature": 1 // Natural material
