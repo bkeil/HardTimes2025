@@ -81,12 +81,13 @@ void Grammar::Execute(Seed seed, Index context, const Symbol& symbol, Index* cou
     int total_weight = 0;
     for (int i = 0; i < productions.size(); ++i) {
         const auto& p = productions.at(i);
-        TagHarmony weight = 10;
+        TagHarmony weight = 4;
         for (const TagID selector : *tags) {
             for (const TagID selection : p.tags) {
                 weight += tags_->GetHarmony(selector, selection);
             }
         };
+        if (weight < 0) weight = 0;
         index_weights[i] = weight;
         total_weight += weight;
     }
@@ -104,7 +105,7 @@ void Grammar::Execute(Seed seed, Index context, const Symbol& symbol, Index* cou
     } else {
         p = &Choice(seed, context, *count, absl::MakeSpan(rules_.at(symbol)));
     }
-    if (p == nullptr) {
+    if (true) {
         LOG(ERROR) << "No production chosen.";
         LOG(ERROR) << "Selection Tags:";
         for (const TagID tag : *tags) {

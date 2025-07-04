@@ -5,6 +5,7 @@
 #include "absl/base/no_destructor.h"
 #include "absl/container/node_hash_map.h"
 #include "absl/log/log.h"
+#include "gen/aspects.h"
 #include "gen/name.h"
 #include "gen/random.h"
 
@@ -33,6 +34,17 @@ Region& FetchRegion(Location location, int gen_level, Seed world_seed) {
 }  // namespace
 
 const Region& GetRegion(Location location, int gen_level, Seed world_seed) { return FetchRegion(location, gen_level, world_seed); };
+
+const Culture& GetCulture(Seed seed, const Tags& tags) {
+    static absl::NoDestructor<absl::node_hash_map<Seed, Culture>> cultures;
+    if (!cultures->contains(seed)) {
+        Culture& culture = (*cultures)[seed];
+        const size_t num_tags = tags.size();
+        culture.tag1 = ChoseIndex(seed, aspects::region::CULTURE, aspects::culture::TAG1, num_tags);
+        culture.tag2 = ChoseIndex(seed, aspects::region::CULTURE, aspects::culture::TAG2, num_tags);
+    }
+    return cultures->at(seed);
+}
 
 namespace {
 

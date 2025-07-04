@@ -3,6 +3,12 @@ load("@rules_cc//cc:cc_library.bzl", "cc_library")
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
+    name = "aspects",
+    hdrs = ["aspects.h"],
+    deps = [],
+)
+
+cc_library(
     name = "grammar",
     srcs = ["grammar.cc"],
     hdrs = ["grammar.h"],
@@ -30,6 +36,7 @@ cc_library(
         "//db:tags.jsonc",
     ],
     deps = [
+        ":aspects",
         ":grammar",
         ":random",
         ":tag",
@@ -70,8 +77,8 @@ cc_library(
     srcs = ["region.cc"],
     hdrs = ["region.h"],
     deps = [
+        ":name",
         ":random",
-        "//gen:name",
         "//types",
         "@abseil-cpp//absl/base:no_destructor",
         "@abseil-cpp//absl/container:node_hash_map",

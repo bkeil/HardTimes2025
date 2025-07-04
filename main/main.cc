@@ -33,7 +33,7 @@ void Demo() {
     map_chars[{1, 0}] = "→";
     map_chars[{1, 1}] = "↘";
 
-    constexpr int LEFT = 0, TOP = 0, RIGHT = 15, BOTTOM = 10;
+    constexpr int LEFT = 0, TOP = 0, RIGHT = 3, BOTTOM = 3;
 
     std::cerr << " ";
     for (int x = LEFT; x < RIGHT; ++x) {
@@ -74,7 +74,7 @@ void Demo() {
 }  // namespace ht2025
 
 int main(int argc, char** argv) {
-    absl::InitializeLog();
+    // absl::InitializeLog();
 
     ht2025::Demo();
 }

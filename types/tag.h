@@ -23,6 +23,8 @@ class Tags {
     TagHarmony GetHarmony(TagID selector, TagID selection) const;
     std::string_view GetText(TagID tag) const;
 
+    inline size_t size() const { return tag_ids_.size(); }
+
     TagID RegisterTag(std::string_view tag);
     void SetHarmony(TagID selector, TagID selection, TagHarmony weight);
 
