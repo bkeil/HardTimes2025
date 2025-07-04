@@ -6,13 +6,32 @@ module(
 )
 
 bazel_dep(name = "abseil-cpp", version = "20250127.1")
+bazel_dep(name = "googletest", version = "1.17.0")
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 bazel_dep(name = "nlohmann_json", version = "3.12.0")
+bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "re2", version = "2024-07-02.bcr.1")
 bazel_dep(name = "rules_cc", version = "0.1.1")
+bazel_dep(name = "rules_foreign_cc", version = "0.15.0")
 
 git_override(
     module_name = "hedron_compile_commands",
     remote = "https://github.com/mikael-s-persson/bazel-compile-commands-extractor",
     commit = "f5fbd4cee671d8d908f37c83abaf70fba5928fc7",
+)
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# Libraries need to build on Debian 12:
+# sudo apt install libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
+http_archive(
+    name = "raylib_src_5_5",
+    build_file_content = """filegroup(
+      name = "all_srcs",
+      srcs = glob(["**"]),
+      visibility = ["//visibility:public"],
+    )""",
+    strip_prefix = "raylib-5.5",
+    url = "https://github.com/raysan5/raylib/archive/refs/tags/5.5.zip",
+    sha256 = "00e8a7c85f7a5221e56ee8e4e1c6642b773eae73d29379a91c8ac5149e803f42",
 )
