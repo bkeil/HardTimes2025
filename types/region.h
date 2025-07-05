@@ -26,6 +26,7 @@ struct Region {
     std::optional<Location> superior;
 
     // Gen Level 2
+    std::optional<Location> supreme;
     std::optional<Index> culture;
     std::optional<std::string> name;
 

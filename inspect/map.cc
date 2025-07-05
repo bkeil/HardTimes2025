@@ -152,7 +152,8 @@ void Demo() {
     map_chars[{1, 0}] = "->";
     map_chars[{1, 1}] = "_]";
 
-    constexpr int LEFT = 0, TOP = 0, RIGHT = 16, BOTTOM = 10;
+    int left = 0, top = 0;
+    constexpr int WIDTH = 16, HEIGHT = 10;
     Font font = GetFontDefault();  // Get default system font
 
     while (!WindowShouldClose()) {
@@ -160,10 +161,14 @@ void Demo() {
 
         ClearBackground(RAYWHITE);
 
-        for (int y = TOP; y < BOTTOM; ++y) {
-            for (int x = LEFT; x < RIGHT; ++x) {
+        for (int row = 0; row < HEIGHT; ++row) {
+            const int y = top + row;
+            for (int col = 0; col < WIDTH; ++col) {
+                const int x = left + col;
+
                 Location loc{x, y};
-                auto& region = GetRegion(loc, 2, world_seed);
+
+                const Region& region = GetRegion(loc, 2, world_seed);
                 std::string box_text = region.name.value() + "\n";
                 if (region.superior) {
                     auto& sup_loc = *region.superior;
@@ -172,10 +177,29 @@ void Demo() {
                 } else {
                     box_text += map_chars[{0, 0}];
                 }
-                DrawTextBoxed(font, box_text.c_str(),
-                              Rectangle{.x = 100.0f * x + 2, .y = 100.0f * y + 2, .width = 95, .height = 95}, 10.0f, 2.0f, true,
-                              BLACK);
+
+                Rectangle box{.x = 100.0f * col + 2, .y = 100.0f * row + 2, .width = 95, .height = 95};
+                DrawTextBoxed(font, box_text.c_str(), box, 10.0f, 2.0f, true, BLACK);
+
+                const Region& south = GetRegion({x, y + 1}, 2, world_seed);
+                const Region& east = GetRegion({x + 1, y}, 2, world_seed);
+                if (*region.supreme != *south.supreme) {
+                    DrawRectangle(box.x - 3, box.y + box.height, 100, 2, BLACK);
+                }
+                if (*region.supreme != *east.supreme) {
+                    DrawRectangle(box.x + box.width, box.y - 3, 2, 100, BLACK);
+                }
             }
+        }
+
+        if (IsKeyPressed(KEY_DOWN)) {
+            top += 1;
+        } else if (IsKeyPressed(KEY_UP)) {
+            top -= 1;
+        } else if (IsKeyPressed(KEY_LEFT)) {
+            left -= 1;
+        } else if (IsKeyPressed(KEY_RIGHT)) {
+            left += 1;
         }
 
         EndDrawing();

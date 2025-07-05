@@ -4,6 +4,7 @@
 
 #include "absl/base/no_destructor.h"
 #include "absl/container/node_hash_map.h"
+#include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "gen/aspects.h"
 #include "gen/name.h"
@@ -81,23 +82,18 @@ void GenRegion1(Region& region, Seed world_seed) {
         region.superior = {superior->x, superior->y};
     } else {
         LOG(INFO) << "This is the apex!";
+        region.supreme = {superior->x, superior->y};
     }
     region.gen_level = 1;
 }
 
-Index GetCulture(Region& region, Seed world_seed) {
-    if (region.culture.has_value()) {
-        LOG(INFO) << "Found culture at " << region.x << ", " << region.y << ": " << *region.culture;
-        return *region.culture;
+Location GetSupreme(Region& region, Seed world_seed) {
+    if (region.supreme.has_value()) {
+        return *region.supreme;
     }
-    if (region.superior.has_value()) {
-        Region& superior = FetchRegion(*region.superior, 1, world_seed);
-        LOG(INFO) << "Chasing culture to " << superior.x << ", " << superior.y;
-        return GetCulture(superior, world_seed);
-    }
-    region.culture = GetSeedForLocation({0, 0}, region.seed);
-    LOG(INFO) << "Set culture at " << region.x << ", " << region.y << " to " << *region.culture;
-    return *region.culture;
+    QCHECK(region.superior.has_value());
+    Region& superior = FetchRegion(*region.superior, 1, world_seed);
+    return GetSupreme(superior, world_seed);
 }
 
 // Determines:
@@ -109,7 +105,7 @@ void GenRegion2(Region& region, Seed world_seed) {
         GenRegion1(region, world_seed);
     }
 
-    region.culture = GetCulture(region, world_seed);
+    region.supreme = GetSupreme(region, world_seed);
 
     region.name = RegionName(region.seed);
     LOG(INFO) << "Name: " << *region.name;
