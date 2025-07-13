@@ -1,5 +1,6 @@
 import { DiamondSquare } from "./diamond_square.js";
 import { Simplex } from "./simplex.js";
+import { squirrel5 } from "./squirrel_noise.js";
 
 // Get a reference to the canvas element
 /** @type {HTMLCanvasElement} */
@@ -15,6 +16,26 @@ const width = canvas.width,
     height = canvas.height;
 const grid = 10,
     stroke = 4;
+
+function TotallyRandom(rows, cols, seed, z = 0) {
+    const r = squirrel5(seed);
+    const xy = (x, y) => {
+        let p = 1009;
+        p = 1013 * p + x;
+        p = 1019 * p + y;
+        p = 1021 * p + z;
+        return r(p);
+    };
+    const field = {};
+    for (let row = 0; row < rows; ++row) {
+        field[row] = {};
+        for (let col = 0; col < cols; ++col) {
+            field[row][col] = xy(col, row, z) % 1024;
+        }
+    }
+    return field;
+}
+window['TotallyRandom'] = TotallyRandom;
 
 // Get the 2D rendering context
 const ctx = canvas.getContext("2d");
