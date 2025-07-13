@@ -11,8 +11,16 @@
             style="position: absolute; top: 0; left: 0"
             onsubmit="return false;"
         >
+            <label>Seed</label>
             <input type="number" name="seed" id="seed" value="3" autofocus />
+            <br />
+            <label>Water Noise</label>
             <select name="waterfunc" id="waterfunc">
+                <option value="TotallyRandom">Totally Random</option>
+            </select>
+            <br />
+            <label>Height Noise</label>
+            <select name="heightfunc" id="heightfunc">
                 <option value="TotallyRandom">Totally Random</option>
             </select>
         </form>
