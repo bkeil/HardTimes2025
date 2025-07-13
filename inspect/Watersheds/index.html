@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>Watersheds</title>
-  <link rel="stylesheet" href="./style.css">
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<form style="position: absolute; top: 0; left: 0">
-  <input type='number' name='seed' value='3' id='seed' />
-</form>
-<canvas id="myCanvas" width="1600" height="1200"></canvas>
-<!-- partial -->
-  <script  src="./script.js"></script>
-
-</body>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Watersheds</title>
+        <link rel="stylesheet" href="./style.css" />
+    </head>
+    <body>
+        <!-- partial:index.partial.html -->
+        <form
+            style="position: absolute; top: 0; left: 0"
+            onsubmit="return false;"
+        >
+            <input type="number" name="seed" id="seed" value="3" />
+            <select name="waterfunc" id="waterfunc"></select>
+        </form>
+        <canvas id="myCanvas" width="1600" height="1200"></canvas>
+        <!-- partial -->
+        <script src="./script.js"></script>
+    </body>
 </html>
