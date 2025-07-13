@@ -1,5 +1,5 @@
 import { DiamondSquare } from "./diamond_square.js";
-import { noise } from "./perlin.js";
+import { Simplex } from "./simplex.js";
 
 // Get a reference to the canvas element
 /** @type {HTMLCanvasElement} */
@@ -19,39 +19,6 @@ const grid = 10,
 // Get the 2D rendering context
 const ctx = canvas.getContext("2d");
 
-function Simplex(rows, cols, seed, freq = 64, octaves = 1) {
-    const water = [];
-    noise.seed(seed);
-
-    let weight = 1,
-        total_weight = 0;
-    for (let o = 0; o < octaves; ++o) {
-        total_weight += weight;
-        weight /= 2;
-    }
-
-    for (let row = 0; row < rows; ++row) {
-        water[row] = [];
-        const y = row / freq;
-        for (let col = 0; col < cols; ++col) {
-            const x = col / freq;
-            let w = 0;
-            weight = 1;
-
-            let factor = 1;
-            for (let o = 0; o < octaves; ++o) {
-                w += weight * noise.simplex2(x * factor, y * factor);
-                factor *= 2;
-                weight /= 2;
-            }
-            w /= total_weight;
-
-            water[row][col] = Math.floor(w * 511) + 512;
-        }
-    }
-    return water;
-}
-
 for (const chunk_size of [4, 8, 16, 32, 64]) {
     const funcname = "DiamondSquare" + chunk_size;
     window[funcname] = (rows, cols, seed) =>
@@ -62,7 +29,7 @@ for (const chunk_size of [4, 8, 16, 32, 64]) {
     waterfunc_input.appendChild(option);
 }
 
-for (const freq of [4, 24, 64]) {
+for (const freq of [8, 24, 72]) {
     for (const octaves of [1, 2, 4]) {
         const funcname = "Simplex" + freq + "_" + octaves;
         window[funcname] = (rows, cols, seed) =>
@@ -165,6 +132,6 @@ waterfunc_input.addEventListener("change", () => {
 
 window.onload = function () {
     waterfunc_input.value = "DiamondSquare64";
-    seed_input.value = -45;
+    seed_input.value = -37;
     waterfunc_input.dispatchEvent(new Event("change"));
 };
