@@ -17,3 +17,11 @@ cc_binary(
         "//third_party/raylib",
     ],
 )
+
+cc_binary(
+    name = "noise",
+    srcs = ["noise.cc"],
+    deps = [
+        "//third_party/eiserloh:squirrel_noise_5",
+    ],
+)
