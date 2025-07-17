@@ -46,11 +46,12 @@ function TotallyRandom(rows, cols, seed, z = 0) {
     }
     return field;
 }
-window['TotallyRandom'] = TotallyRandom;
+window["TotallyRandom"] = TotallyRandom;
 
 // Get the 2D rendering context
 const ctx = canvas.getContext("2d");
-const RAINFALL = 0, ELEVATION = 1;
+const RAINFALL = 0,
+    ELEVATION = 1;
 
 for (const chunk_size of [4, 8, 16, 32, 64]) {
     const funcname = "DiamondSquare" + chunk_size;
@@ -63,7 +64,7 @@ for (const chunk_size of [4, 8, 16, 32, 64]) {
     heightfunc_input.appendChild(option.cloneNode());
 }
 
-for (const freq of [8, 24, 72]) {
+for (const freq of [12, 36, 72]) {
     for (const octaves of [1, 2, 4]) {
         const funcname = "Simplex" + freq + "_" + octaves;
         window[funcname] = (rows, cols, seed, aspect) =>
@@ -92,8 +93,8 @@ function getWater(chunks, row, col) {
     }
     const min_dx = col > 0 ? -1 : 0;
     const min_dy = row > 0 ? -1 : 0;
-    const max_dx = col < (cols - 1) ? 1 : 0;
-    const max_dy = row < (rows - 1) ? 1 : 0;
+    const max_dx = col < cols - 1 ? 1 : 0;
+    const max_dy = row < rows - 1 ? 1 : 0;
     const chunk = chunks[row][col];
     let water = chunk.water;
     for (let dx = min_dx; dx <= max_dx; ++dx) {
@@ -101,14 +102,16 @@ function getWater(chunks, row, col) {
             const neighbor = chunks[row + dy][col + dx];
             if (neighbor == chunk) continue;
             if (neighbor.flows_to == chunk) {
-                water += Math.floor(getWater(chunks, row + dy, col + dx) * evaporation);
+                water += Math.floor(
+                    getWater(chunks, row + dy, col + dx) * evaporation
+                );
             }
         }
     }
     if (water > 1023) water = 1023;
     water_cache[row][col] = water;
     return water;
-};
+}
 window.getWater = getWater;
 window.getWaterCache = () => water_cache;
 window.clearWaterCache = clearWaterCache;
@@ -119,9 +122,9 @@ function drawWorld() {
     const seed = parseInt(seed_input.value, 10);
     console.log("seed", seed);
     console.log("cols", cols, "rows", rows);
-    const chunks = window.chunks = Array.from({ length: rows }, () =>
+    const chunks = (window.chunks = Array.from({ length: rows }, () =>
         Array.from({ length: cols }, () => ({}))
-    );
+    ));
 
     // Moisture map
     const rainfall = waterfunc(rows, cols, seed, RAINFALL);
@@ -169,7 +172,7 @@ function drawWorld() {
                 const red = depth / 2;
                 const green = 128 - depth;
                 const blue = 255 - depth / 2;
-                ctx.fillStyle = `rgb(${red} ${green} ${blue})`
+                ctx.fillStyle = `rgb(${red} ${green} ${blue})`;
             } else {
                 atmos -= 256;
                 let stone = atmos / 767;
@@ -198,7 +201,7 @@ function drawWorld() {
                     dest.col * grid + grid / 2,
                     dest.row * grid + grid / 2
                 );
-                ctx.lineWidth = (stroke - .25) * (water / 1023) + .25;
+                ctx.lineWidth = (stroke - 0.25) * (water / 1023) + 0.25;
                 ctx.stroke();
             }
         }
@@ -219,13 +222,13 @@ function setStrokeStyle(water) {
         blue = flow;
     } else if (flow < 256) {
         flow -= 64;
-        red = green = 32 - Math.floor(32 * flow / 192);
-        blue = 32 + Math.floor(224 * flow / 196);
+        red = green = 32 - Math.floor((32 * flow) / 192);
+        blue = 32 + Math.floor((224 * flow) / 196);
     } else {
         red = green = 0;
         blue = 256;
     }
-    ctx.strokeStyle = `rgb(${red} ${green} ${blue})`
+    ctx.strokeStyle = `rgb(${red} ${green} ${blue})`;
 }
 
 seed_input.addEventListener("change", drawWorld);
@@ -240,10 +243,8 @@ heightfunc_input.addEventListener("change", () => {
     drawWorld();
 });
 
-window.onload = function () {
-    waterfunc_input.value = "DiamondSquare32";
-    heightfunc_input.value = "Simplex72_4";
-    seed_input.value = -31;
-    waterfunc_input.dispatchEvent(new Event("change"));
-    heightfunc_input.dispatchEvent(new Event("change"));
-};
+waterfunc_input.value = "DiamondSquare32";
+heightfunc_input.value = "Simplex72_4";
+seed_input.value = -31;
+waterfunc_input.dispatchEvent(new Event("change"));
+heightfunc_input.dispatchEvent(new Event("change"));
