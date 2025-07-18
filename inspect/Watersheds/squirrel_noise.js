@@ -17,12 +17,7 @@ idvaAWwiAiACQRF2cws=`;
 })();
 
 // Returns signed int32.
-export const squirrel5hash = sq5_instance.exports.squirrel5hash;
-const hash = squirrel5hash;
-
-export const squirrel5 = (seed = 0) => {
-    return (position = 0) => squirrel5hash(seed, position);
-};
+const hash = sq5_instance.exports.squirrel5hash;
 
 const UInt32 = {
     Noise1D: (seed, x) => {

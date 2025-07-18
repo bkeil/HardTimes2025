@@ -1,13 +1,8 @@
-import { squirrel5 } from "./squirrel_noise.js";
+import { Squirrel5 } from "./squirrel_noise.js";
 
 export function DiamondSquare(rows, cols, seed, chunk_size, z = 0) {
-    const r = squirrel5(seed);
     const xy = (x, y) => {
-        let p = 3;
-        p = 5 * p + x;
-        p = 7 * p + y;
-        p = 11 * p + z;
-        return r(p);
+        return Squirrel5.UInt32.Noise3D(seed, x, y, z);
     };
 
     const water = {};

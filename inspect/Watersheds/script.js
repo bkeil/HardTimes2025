@@ -1,8 +1,8 @@
 import { DiamondSquare } from "./diamond_square.js";
 import { Simplex } from "./simplex.js";
-import { squirrel5 } from "./squirrel_noise.js";
+import { Squirrel5 } from "./squirrel_noise.js";
 
-window.squirrel5 = squirrel5;
+window.Squirrel5 = Squirrel5;
 
 // Get a reference to the canvas element
 /** @type {HTMLCanvasElement} */
@@ -28,14 +28,7 @@ const cols = Math.floor(width / grid),
     rows = Math.floor(height / grid);
 
 function TotallyRandom(rows, cols, seed, z = 0) {
-    const r = squirrel5(seed);
-    const xy = (x, y) => {
-        let p = 1009;
-        p = 1013 * p + x;
-        p = 1019 * p + y;
-        p = 1021 * p + z;
-        return r(p);
-    };
+    const xy = (x, y) => Squirrel5.UInt32.Noise3D(seed, x, y, z);
     const field = {};
     for (let row = 0; row < rows; ++row) {
         field[row] = {};
