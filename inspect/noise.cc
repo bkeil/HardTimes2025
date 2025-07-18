@@ -11,4 +11,16 @@ int main() {
         int low_pos = pos - 2;
         std::cout << "seed = " << big_seed << "; pos = " << low_pos << "; noise = " << SquirrelNoise5(low_pos, big_seed) << "\n";
     }
+
+    {
+        const unsigned int seed = 1;
+        for (int x = 1; x < 3; ++x) {
+            for (int y = 1; y < 3; ++y) {
+                for (int z = 1; z < 3; ++z) {
+                    std::cout << "seed = " << seed << "; pos = " << x << "," << y << "," << z
+                              << "; noise = " << Get3dNoiseUint(x, y, z, seed) << "\n";
+                }
+            }
+        }
+    }
 }
