@@ -27,6 +27,9 @@ const showcreeks_input = document.getElementById("showcreeks");
 /** @type {HTMLInputElement} */
 const showwatersheds_input = document.getElementById("showwatersheds");
 
+/** @type {HTMLInputElement} */
+const correctdiagonals_input = document.getElementById("correctdiagonals");
+
 // ==========================================================================
 // =============================== World Size ===============================
 // ==========================================================================
@@ -34,7 +37,7 @@ const showwatersheds_input = document.getElementById("showwatersheds");
 const width = canvas.width,
     height = canvas.height;
 
-const grid = 25,
+const grid = 16,
     stroke = 2,
     padding = 0;
 
@@ -219,14 +222,18 @@ function unflow(chunk) {
     }
 }
 
+const sqrt2 = Math.sqrt(2);
 function reflow(chunks, row, col) {
     const chunk = chunks[row][col];
+    const correctdiagonals = correctdiagonals_input.checked;
     unflow(chunk);
 
-    let lowest_neighbor = chunk;
+    let steepest_neighbor = chunk;
+    let steepest_slope = 0;
     for (let dr = -1; dr < 2; ++dr) {
         for (let dc = -1; dc < 2; ++dc) {
-            if (!allow_diagnals && (dr === 0) === (dc === 0)) continue;
+            const diagonal = (dr === 0) === (dc === 0);
+            if (!allow_diagnals && diagonal) continue;
             let rr = row + dr,
                 cc = col + dc;
             if (!(rr in chunks) || !(cc in chunks[rr])) continue;
@@ -235,14 +242,17 @@ function reflow(chunks, row, col) {
                 console.log("Missing neighbor", rr, cc);
                 continue;
             }
-            if (neighbor.height < lowest_neighbor.height) {
-                lowest_neighbor = neighbor;
+            let slope = chunk.height - neighbor.height;
+            if (diagonal && correctdiagonals) slope /= sqrt2;
+            if (slope > steepest_slope) {
+                steepest_neighbor = neighbor;
+                steepest_slope = slope;
             }
         }
     }
-    if (lowest_neighbor != chunk) {
-        chunk["flows_to"] = lowest_neighbor;
-        lowest_neighbor.flows_from.push(chunk);
+    if (steepest_neighbor != chunk) {
+        chunk["flows_to"] = steepest_neighbor;
+        steepest_neighbor.flows_from.push(chunk);
     }
 }
 
@@ -336,6 +346,7 @@ function assignStrahlerNumber(chunk) {
 function processWatershed(chunks, chunk) {
     // Find all up-hill neighbors in the same watershed.
     let stack = [chunk];
+    const correctdiagonals = correctdiagonals_input.checked;
     while (stack.length > 0) {
         let c = stack.pop();
         unflow(c);
@@ -343,7 +354,8 @@ function processWatershed(chunks, chunk) {
         c.hydros = [];
         for (let dr = -1; dr < 2; ++dr) {
             for (let dc = -1; dc < 2; ++dc) {
-                if (!allow_diagnals && (dr === 0) === (dc === 0)) continue;
+                const diagonal = (dr === 0) === (dc === 0);
+                if (!allow_diagnals && diagonal) continue;
                 let rr = c.row + dr,
                     cc = c.col + dc;
                 if (!(rr in chunks) || !(cc in chunks[rr])) continue;
@@ -373,6 +385,11 @@ function processWatershed(chunks, chunk) {
             for (let target of dropper.hydros) {
                 if (!added.has(target)) continue;
                 let drop = dropper.height - target.height;
+                let delta_x = dropper.col - target.col;
+                let delta_y = dropper.row - target.row;
+                if (correctdiagonals && delta_x !== 0 && delta_y !== 0) {
+                    drop /= sqrt2;
+                }
                 if (drop > biggestDrop) {
                     biggestDrop = drop;
                     biggestDropper = [target, dropper];
@@ -581,6 +598,7 @@ function setStrokeStyle(water) {
 seed_input.addEventListener("change", newWorld);
 waterfunc_input.addEventListener("change", newWorld);
 heightfunc_input.addEventListener("change", newWorld);
+correctdiagonals_input.addEventListener("change", newWorld);
 
 showcreeks_input.addEventListener("change", drawWorld);
 showwatersheds_input.addEventListener("change", drawWorld);
@@ -590,9 +608,9 @@ function newWorld() {
     drawWorld();
 }
 
-waterfunc_input.value = "TotallyRandom";
+waterfunc_input.value = "Simplex36_2";
 heightfunc_input.value = "DiamondSquare32";
-seed_input.value = -31;
+seed_input.value = 21;
 newWorld();
 
 const erosionLoop = () => {
