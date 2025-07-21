@@ -1,61 +1,59 @@
 import { Squirrel5 } from "./squirrel_noise.js";
 
-export function DiamondSquare(rows, cols, seed, chunk_size, z = 0) {
-    const xy = (x, y) => {
-        return Squirrel5.UInt32.Noise3D(seed, x, y, z);
-    };
+export function DiamondSquare(
+    rows,
+    cols,
+    seed,
+    chunk_size,
+    aspect,
+    max_relief,
+    allow_negative
+) {
+    const xy = allow_negative
+        ? (x, y) => Squirrel5.Int32.Noise3D(seed, x, y, aspect)
+        : (x, y) => Squirrel5.UInt32.Noise3D(seed, x, y, aspect);
 
-    const water = {};
+    const values = {};
     const size = chunk_size;
     const vchunks = Math.ceil(rows / size) + 2;
     const hchunks = Math.ceil(cols / size) + 2;
-    console.log("hchunks", hchunks, "vchunks", vchunks);
+
     for (let y = -1; y < vchunks; ++y) {
-        water[y * size] = {};
+        values[y * size] = {};
         for (let x = -1; x < hchunks; ++x) {
-            water[y * size][x * size] = xy(x, y) & 1023;
+            values[y * size][x * size] = xy(x, y) % max_relief;
         }
     }
 
-    // console.log("Before algorithm", JSON.parse(JSON.stringify(water)));
-
     let side = size,
         half = side / 2,
-        displacement = 256;
+        displacement = max_relief / 4;
     while (side > 1) {
-        // Diamond
+        // ==================================================================
+        // ============================ Diamond =============================
+        // ==================================================================
         let rightmost = (hchunks - 2) * size + half;
         let bottom = (vchunks - 2) * size + half;
-        console.log(
-            "side",
-            side,
-            "half",
-            half,
-            "rightmost",
-            rightmost,
-            "bottom",
-            bottom
-        );
         for (let y = -half; y <= bottom; y += side) {
             for (let x = -half; x <= rightmost; x += side) {
-                let ny = y - half,
-                    sy = y + half;
-                let wx = x - half,
-                    ex = x + half;
-                let n = (water[ny] = water[ny] || {});
-                let s = (water[sy] = water[sy] || {});
-                let h = (water[y] = water[y] || {});
-                let nw = n[wx];
-                let ne = n[ex];
-                let sw = s[wx];
-                let se = s[ex];
-                h[x] = Math.floor((nw + ne + sw + se) / 4);
-                // console.log('diamond set', x, y, water[y][x]);
+                let north_y = y - half,
+                    south_y = y + half;
+                let west_x = x - half,
+                    east_x = x + half;
+                let north_row = (values[north_y] = values[north_y] || {});
+                let south_row = (values[south_y] = values[south_y] || {});
+                let this_row = (values[y] = values[y] || {});
+                let nw = north_row[west_x];
+                let ne = north_row[east_x];
+                let sw = south_row[west_x];
+                let se = south_row[east_x];
+                this_row[x] = Math.floor((nw + ne + sw + se) / 4);
             }
         }
-        // console.log("After diamond", JSON.parse(JSON.stringify(water)));
 
-        // Square
+        // ==================================================================
+        // ============================= Square =============================
+        // ==================================================================
         let offset = true;
         for (let y = -half; y <= bottom; y += half) {
             for (let x = offset ? 0 : -half; x <= rightmost; x += side) {
@@ -63,35 +61,32 @@ export function DiamondSquare(rows, cols, seed, chunk_size, z = 0) {
                     sy = y + half;
                 let wx = x - half,
                     ex = x + half;
-                if (!water[ny]) {
+                if (!values[ny]) {
                     console.log("Missing row", ny);
                     break;
                 }
-                if (!water[sy]) {
+                if (!values[sy]) {
                     console.log("Missing row", sy);
-                    creak;
+                    break;
                 }
-                let n = water[ny][x],
-                    s = water[sy][x];
-                let w = water[y][wx],
-                    e = water[y][ex];
-                let d = xy(x, y) % (displacement + 1);
-                d -= displacement / 2;
+                let n = values[ny][x],
+                    s = values[sy][x];
+                let w = values[y][wx],
+                    e = values[y][ex];
+                let d = xy(x, y) % displacement;
                 let mid = Math.floor((n + e + w + s) / 4);
                 let v = mid + d;
-                if (v < 0) v = 0;
-                if (v > 1023) v = 1023;
-                // console.log('square set', x, y, 'mid', mid , '+', 'd', d, '=', 'v', v);
-                water[y][x] = v;
+                if (v < -max_relief) v = -max_relief;
+                if (v > max_relief) v = max_relief;
+                values[y][x] = v;
             }
             offset = !offset;
         }
-        // console.log("After square", JSON.parse(JSON.stringify(water)));
 
         side /= 2;
         half /= 2;
         displacement /= 2;
     }
 
-    return water;
+    return values;
 }

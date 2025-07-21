@@ -1,7 +1,15 @@
 import { noise } from "./perlin.js";
 
-export function Simplex(rows, cols, seed, freq = 64, octaves = 1) {
-    const water = [];
+export function Simplex(
+    rows,
+    cols,
+    seed,
+    freq = 64,
+    octaves = 1,
+    max_relief,
+    allow_negative
+) {
+    const value = [];
     noise.seed(seed);
 
     let weight = 1,
@@ -12,7 +20,7 @@ export function Simplex(rows, cols, seed, freq = 64, octaves = 1) {
     }
 
     for (let row = 0; row < rows; ++row) {
-        water[row] = [];
+        value[row] = [];
         const y = row / freq;
         for (let col = 0; col < cols; ++col) {
             const x = col / freq;
@@ -21,14 +29,18 @@ export function Simplex(rows, cols, seed, freq = 64, octaves = 1) {
 
             let factor = 1;
             for (let o = 0; o < octaves; ++o) {
-                w += weight * noise.simplex2(x * factor, y * factor);
+                w +=
+                    weight *
+                    noise.simplex2(x * factor + factor, y * factor - factor);
                 factor *= 2;
                 weight /= 2;
             }
             w /= total_weight;
 
-            water[row][col] = Math.floor(w * 511) + 512;
+            if (!allow_negative) w = (1 + w) / 2;
+
+            value[row][col] = Math.floor(w * max_relief);
         }
     }
-    return water;
+    return value;
 }
