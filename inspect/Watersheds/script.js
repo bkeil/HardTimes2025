@@ -13,22 +13,16 @@ window.Squirrel5 = Squirrel5;
 const canvas = document.getElementById("myCanvas");
 
 /** @type {HTMLInputElement} */
-const seed_input = document.getElementById("seed");
+const seed_input = document.getElementById("seed"),
+    showcreeks_input = document.getElementById("showcreeks"),
+    showwatersheds_input = document.getElementById("showwatersheds"),
+    allowdiagonals_input = document.getElementById("allowdiagonals"),
+    reflowwatersheds_input = document.getElementById("reflowwatersheds"),
+    correctdiagonals_input = document.getElementById("correctdiagonals");
 
 /** @type {HTMLSelectElement} */
-const waterfunc_input = document.getElementById("waterfunc");
-
-/** @type {HTMLSelectElement} */
-const heightfunc_input = document.getElementById("heightfunc");
-
-/** @type {HTMLInputElement} */
-const showcreeks_input = document.getElementById("showcreeks");
-
-/** @type {HTMLInputElement} */
-const showwatersheds_input = document.getElementById("showwatersheds");
-
-/** @type {HTMLInputElement} */
-const correctdiagonals_input = document.getElementById("correctdiagonals");
+const waterfunc_input = document.getElementById("waterfunc"),
+    heightfunc_input = document.getElementById("heightfunc");
 
 // ==========================================================================
 // =============================== World Size ===============================
@@ -46,8 +40,6 @@ const max_rainfall = 1024; // Centimeters annually.
 
 const cols = Math.floor(width / grid),
     rows = Math.floor(height / grid);
-
-const allow_diagnals = true;
 
 // ==========================================================================
 // ============================ Noise Functions =============================
@@ -226,6 +218,7 @@ const sqrt2 = Math.sqrt(2);
 function reflow(chunks, row, col) {
     const chunk = chunks[row][col];
     const correctdiagonals = correctdiagonals_input.checked;
+    const allow_diagonals = allowdiagonals_input.checked;
     unflow(chunk);
 
     let steepest_neighbor = chunk;
@@ -233,7 +226,7 @@ function reflow(chunks, row, col) {
     for (let dr = -1; dr < 2; ++dr) {
         for (let dc = -1; dc < 2; ++dc) {
             const diagonal = (dr === 0) === (dc === 0);
-            if (!allow_diagnals && diagonal) continue;
+            if (!allow_diagonals && diagonal) continue;
             let rr = row + dr,
                 cc = col + dc;
             if (!(rr in chunks) || !(cc in chunks[rr])) continue;
@@ -317,12 +310,18 @@ function genWorld() {
         }
     }
 
+    const reflowwatersheds = reflowwatersheds_input.checked;
+
     let processedWatersheds = new Set();
     for (let row = 1; row < rows - 1; ++row) {
         for (let col = 1; col < cols - 1; ++col) {
             let chunk = chunks[row][col];
             if (processedWatersheds.has(chunk.watershed)) continue;
-            processWatershed(chunks, chunk.watershed);
+            if (reflowwatersheds) {
+                processWatershed(chunks, chunk.watershed);
+            } else {
+                assignStrahlerNumber(chunk.watershed);
+            }
             processedWatersheds.add(chunk.watershed);
         }
     }
@@ -346,6 +345,7 @@ function assignStrahlerNumber(chunk) {
 function processWatershed(chunks, chunk) {
     // Find all up-hill neighbors in the same watershed.
     let stack = [chunk];
+    const allow_diagonals = allowdiagonals_input.checked;
     const correctdiagonals = correctdiagonals_input.checked;
     while (stack.length > 0) {
         let c = stack.pop();
@@ -355,7 +355,7 @@ function processWatershed(chunks, chunk) {
         for (let dr = -1; dr < 2; ++dr) {
             for (let dc = -1; dc < 2; ++dc) {
                 const diagonal = (dr === 0) === (dc === 0);
-                if (!allow_diagnals && diagonal) continue;
+                if (!allow_diagonals && diagonal) continue;
                 let rr = c.row + dr,
                     cc = c.col + dc;
                 if (!(rr in chunks) || !(cc in chunks[rr])) continue;
@@ -598,6 +598,8 @@ function setStrokeStyle(water) {
 seed_input.addEventListener("change", newWorld);
 waterfunc_input.addEventListener("change", newWorld);
 heightfunc_input.addEventListener("change", newWorld);
+allowdiagonals_input.addEventListener("change", newWorld);
+reflowwatersheds_input.addEventListener("change", newWorld);
 correctdiagonals_input.addEventListener("change", newWorld);
 
 showcreeks_input.addEventListener("change", drawWorld);
