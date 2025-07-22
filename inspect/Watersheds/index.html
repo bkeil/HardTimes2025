@@ -48,7 +48,12 @@
             />
         </form>
         <canvas id="myCanvas" width="1600" height="1200"></canvas>
-        <!-- partial -->
+
+        <!-- Loading a module is not supported on file:// URLs, so testing
+             this requires a HTTP server.  In VS Code, I use the Live Server
+             extension:
+             https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
+        -->
         <script type="module" src="./script.js"></script>
     </body>
 </html>
