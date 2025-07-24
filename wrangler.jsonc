@@ -1,0 +1,8 @@
+{
+    "name": "watersheds",
+    "compatibility_date": "2025-07-23",
+    "assets": {
+        "directory": "./inspect/Watersheds/",
+        "not_found_handling": "404-page"
+    }
+}
