@@ -14,7 +14,7 @@ const canvas = document.getElementById("myCanvas");
 
 /** @type {HTMLInputElement} */
 const seed_input = document.getElementById("seed"),
-    showcreeks_input = document.getElementById("showcreeks"),
+    minstrahler_input = document.getElementById("minstrahler"),
     showwatersheds_input = document.getElementById("showwatersheds"),
     allowdiagonals_input = document.getElementById("allowdiagonals"),
     reflowwatersheds_input = document.getElementById("reflowwatersheds"),
@@ -82,7 +82,7 @@ const TotallyRandom = (
 };
 window["TotallyRandom"] = TotallyRandom;
 
-for (const chunk_size of [4, 8, 16, 32, 64]) {
+for (const chunk_size of [4, 8, 16, 32, 64, 128]) {
     const funcname = "DiamondSquare" + chunk_size;
     window[funcname] = (rows, cols, seed, aspect, max_relief, allow_negative) =>
         DiamondSquare(
@@ -479,7 +479,7 @@ function drawWorld() {
     ctx.clearRect(0, 0, width, height);
     const chunks = window.chunks;
 
-    const min_strahler = showcreeks_input.checked ? 1 : 2;
+    const min_strahler = parseInt(minstrahler_input.value, 10);
     const show_watershed = showwatersheds_input.checked;
 
     for (let row = 0; row < rows; ++row) {
@@ -602,7 +602,7 @@ allowdiagonals_input.addEventListener("change", newWorld);
 reflowwatersheds_input.addEventListener("change", newWorld);
 correctdiagonals_input.addEventListener("change", newWorld);
 
-showcreeks_input.addEventListener("change", drawWorld);
+minstrahler_input.addEventListener("change", drawWorld);
 showwatersheds_input.addEventListener("change", drawWorld);
 
 function newWorld() {
