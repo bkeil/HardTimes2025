@@ -1,10 +1,10 @@
-#ifndef HT2025_GEN_PERSON_CC
-#define HT2025_GEN_PERSON_CC
-
 #include "gen/person.h"
 
 #include <fstream>
+#include <string>
+#include <vector>
 
+#include "absl/base/no_destructor.h"
 #include "absl/types/span.h"
 #include "nlohmann/json.hpp"
 #include "types/person.h"
@@ -34,5 +34,3 @@ absl::Span<const Background> BACKGROUNDS() {
 }
 
 }  // namespace ht2025
-
-#endif  // HT2025_GEN_PERSON_CC

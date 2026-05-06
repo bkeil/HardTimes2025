@@ -1,7 +1,6 @@
 #ifndef HT2025_GEN_TAG_H
 #define HT2025_GEN_TAG_H
 
-#include <fstream>
 #include <string_view>
 
 #include "gen/random.h"

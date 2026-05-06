@@ -1,5 +1,7 @@
 #include "gen/tag.h"
 
+#include <fstream>
+
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "absl/strings/str_cat.h"
