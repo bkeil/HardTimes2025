@@ -59,7 +59,21 @@ Currently, `gen/region.cc` uses a global in-memory cache (`absl::node_hash_map`)
 
 ---
 
-## 4. Current Status & Known Shortcomings
+## 4. Code Structure
+
+The repository is organized into distinct components separating data, core types, procedural generation, and inspection tools:
+
+*   **`types/`**: Contains the core C++ data structures and type definitions (e.g., `Region`, `Person`, `Tags`, `Culture`). These are pure data types used across the project.
+*   **`db/`**: Holds the JSON and JSONC configuration files that drive the generation engine. This includes the tag harmony definitions (`tags.jsonc`), stochastic grammars (`region_name_grammar.json`), and name lists.
+*   **`gen/`**: The core procedural generation implementation. Contains the logic for the tag system, grammar execution, and the lazy-loading multi-pass region generator (`region.cc`).
+*   **`inspect/`**: Tools and prototypes for visualizing and testing the generation systems.
+    *   **C++ Tools**: Raylib-based visualizers like `map.cc` to view the region hierarchy and domains. (Also includes random test scripts like `snake.cc`).
+    *   **`Watersheds/`**: A web-based (HTML/JS) prototyping environment specifically focused on experimenting with noise functions (Perlin, Simplex, Diamond-Square) to develop the "water layer." This layer is intended to be a crucial component in calculating a region's "Power" in the future.
+*   **`main/`**: A placeholder folder intended for the main game application and game loop once the procedural generation foundation is solid enough to build a playable game on top of.
+
+---
+
+## 5. Current Status & Known Shortcomings
 
 ### Status
 *   **World Map:** A basic Raylib-based inspector (`//inspect:map`) visualizes the hierarchy and supreme domain borders.
