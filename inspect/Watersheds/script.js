@@ -1,8 +1,10 @@
 import { DiamondSquare } from "./diamond_square.js";
 import { Simplex } from "./simplex.js";
 import { Squirrel5 } from "./squirrel_noise.js";
+import { UniqueHeap } from "./unique_heap.js";
 
 window.Squirrel5 = Squirrel5;
+window.UniqueHeap = UniqueHeap;
 
 // ==========================================================================
 // =========================== Interface Elements ===========================
@@ -18,6 +20,7 @@ const seed_input = document.getElementById("seed"),
     showwatersheds_input = document.getElementById("showwatersheds"),
     allowdiagonals_input = document.getElementById("allowdiagonals"),
     reflowwatersheds_input = document.getElementById("reflowwatersheds"),
+    makelakes_input = document.getElementById("makelakes"),
     correctdiagonals_input = document.getElementById("correctdiagonals");
 
 /** @type {HTMLSelectElement} */
@@ -325,6 +328,10 @@ function genWorld() {
             processedWatersheds.add(chunk.watershed);
         }
     }
+
+    if (makelakes_input.checked) {
+        makeLakes(chunks);
+    }
 }
 
 function assignStrahlerNumber(chunk) {
@@ -486,7 +493,7 @@ function drawWorld() {
         for (let col = 0; col < cols; ++col) {
             const chunk = chunks[row][col];
             // setFillStyleByHeight(chunk.height);
-            setFillStyleByWaterAndHeight(chunk.water, chunk.height);
+            setFillStyleByWaterAndHeight(chunk.water, chunk.height, chunk.water_height);
             const x = col * grid,
                 y = row * grid;
             ctx.fillRect(x, y, grid - padding, grid - padding);
@@ -561,11 +568,17 @@ function setFillStyleByHeight(height) {
     }
 }
 
-function setFillStyleByWaterAndHeight(water, height) {
+function setFillStyleByWaterAndHeight(water, height, water_height) {
     if (height < 0) {
         setFillStyleByHeight(height);
         return;
     }
+
+    if (water_height) {
+        setFillStyleByHeight(-water_height);
+        return;
+    }
+
 
     const red = Math.floor(256 * (1 - water / max_rainfall));
     const sat = 100 * (1 - height / max_relief);
@@ -601,6 +614,7 @@ heightfunc_input.addEventListener("change", newWorld);
 allowdiagonals_input.addEventListener("change", newWorld);
 reflowwatersheds_input.addEventListener("change", newWorld);
 correctdiagonals_input.addEventListener("change", newWorld);
+makelakes_input.addEventListener("change", newWorld);
 
 minstrahler_input.addEventListener("change", drawWorld);
 showwatersheds_input.addEventListener("change", drawWorld);
@@ -611,9 +625,69 @@ function newWorld() {
 }
 
 waterfunc_input.value = "Simplex36_2";
-heightfunc_input.value = "DiamondSquare32";
-seed_input.value = 21;
+heightfunc_input.value = "DiamondSquare128";
+seed_input.value = -5;
 newWorld();
+
+function makeLakes(chunks) {
+    const processedWatersheds = new Set();
+    for (let row = 2; row < rows - 2; ++row) {
+        for (let col = 2; col < cols - 2; ++col) {
+            const watershed = chunks[row][col].watershed;
+            if (processedWatersheds.has(watershed)) continue;
+            processedWatersheds.add(watershed);
+            makeLake(chunks, watershed);
+        }
+    }
+};
+
+function makeLake(chunks, watershed) {
+    if (watershed.height <= 0) return;
+    let lake_height = watershed.height;
+    let lake_border = new UniqueHeap((x, y) => x.height - y.height);
+    lake_border.add(watershed);
+    let lake_interior = new Set();
+    let outlet = null;
+    while (outlet === null) {
+        let chunk = lake_border.pop();
+        lake_interior.add(chunk);
+
+        if (chunk.height < lake_height && chunk.watershed != watershed) {
+            outlet = chunk;
+            break;
+        }
+
+        lake_height = chunk.height + 1;
+
+        for (let [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
+            let rr = chunk.row + dr,
+                cc = chunk.col + dc;
+            if (!(rr in chunks) || !(cc in chunks[rr])) continue;
+            if (lake_interior.has(chunks[rr][cc])) continue;
+            let neighbor = chunks[rr][cc];
+            neighbor.coming_from = chunk;
+            lake_border.add(neighbor);
+        }
+    }
+    let came_from = outlet.coming_from;
+    for (let chunk of lake_interior) {
+        delete chunk.coming_from;
+        chunk.water_height = lake_height - chunk.height;
+    }
+    try {
+        let old_flows = came_from.flows_to.flows_from;
+        old_flows.splice(old_flows.indexOf(came_from), 1);
+    } catch (e) { }
+    came_from.flows_to = outlet;
+    outlet.flows_from.push(came_from);
+
+    let flowing = outlet;
+    const strahler = watershed.strahler;
+    while (flowing && strahler > flowing.strahler) {
+        flowing.strahler = strahler;
+        flowing = flowing.flows_to;
+    }
+};
 
 const erosionLoop = () => {
     for (var i = 0; i < 10; ++i) erode();
